@@ -671,7 +671,9 @@ class _BaseHMM(BaseEstimator):
             if n_samples <= 1:
                 return
 
-            log_xi_sum = np.full((n_components, n_components), -np.inf)
+            # log_xi_sum = np.full((n_components, n_components), -np.inf)
+            # fix suggested in https://github.com/hmmlearn/hmmlearn/issues/110#issuecomment-903302524
+            log_xi_sum = np.full((n_components, n_components), -np.log(n_components))
             _hmmc._compute_log_xi_sum(n_samples, n_components, fwdlattice,
                                       log_mask_zero(self.transmat_),
                                       bwdlattice, framelogprob,
